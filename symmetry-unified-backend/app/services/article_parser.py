@@ -7,7 +7,7 @@ from app.models.wiki.structure import Article, Citation, Reference, Section
 async def _fetch_wikipedia_json(url: str, params: dict) -> dict:
     async with httpx.AsyncClient(timeout=10.0) as client:
         response = await client.get(
-            url, params=params, headers={"User-Agent": "SymmetryUnified/1.0"}
+            url, params=params, headers={"User-Agent": "SymmetryUnified/1.0 (https://github.com/grey-box/symmetry-project; educational project)"}
         )
         response.raise_for_status()
         return response.json()

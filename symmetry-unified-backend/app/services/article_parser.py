@@ -17,6 +17,12 @@ def _parse_article_html(html: str, title: str, lang: str, source: str) -> Articl
     """Parse rendered Wikipedia HTML into an Article object."""
     soup = BeautifulSoup(html, "html.parser")
 
+    # Remove styling and executable content before extracting article text.
+    # Wikipedia can place CSS inside article markup, which would otherwise
+    # appear as normal paragraph text and pollute comparison results.
+    for unwanted_tag in soup.find_all(["style", "script", "noscript"]):
+        unwanted_tag.decompose()
+
     sections = []
     current_title = "Lead section"
     rich_current = ""
